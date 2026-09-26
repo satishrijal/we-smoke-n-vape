@@ -88,7 +88,14 @@ function req(method, path, body, token) {
   res = await req('GET', '/');
   ok(res.status === 200 && res.raw.includes('WE SMOKE'), 'homepage serves');
   res = await req('GET', '/admin');
+  ok(res.status === 301, '/admin redirects to /admin/ (keeps styles working)');
+  res = await req('GET', '/admin/');
   ok(res.status === 200 && res.raw.includes('Admin Login'), 'admin page serves');
+  ok(res.raw.includes('class="wrap hidden"'), 'admin panel hidden until login');
+  res = await req('GET', '/admin/admin.css');
+  ok(res.status === 200 && res.raw.includes('.hidden'), 'admin css serves');
+  res = await req('GET', '/admin/admin.js');
+  ok(res.status === 200 && res.raw.includes('Admin panel logic'), 'admin js serves');
 
   // restore seed content
   fs.writeFileSync(contentPath, backup);
