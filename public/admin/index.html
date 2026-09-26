@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — We Smoke N Vape</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div id="login" class="wrap">
+  <div class="card">
+    <h1>💨 Admin Login</h1>
+    <p class="muted">We Smoke N Vape site manager</p>
+    <input id="l-user" placeholder="Username" autocomplete="username">
+    <input id="l-pass" type="password" placeholder="Password" autocomplete="current-password">
+    <button id="l-btn" class="btn">Log in</button>
+    <p id="l-err" class="err"></p>
+  </div>
+</div>
+
+<div id="panel" class="wrap hidden">
+  <header class="top">
+    <h1>💨 Site Admin</h1>
+    <button id="logout" class="btn dim">Log out</button>
+  </header>
+
+  <div class="tabs">
+    <button data-tab="deals" class="on">🏷️ Deals</button>
+    <button data-tab="gallery">📸 Gallery</button>
+    <button data-tab="hours">🕐 Hours</button>
+    <button data-tab="shop">🏪 Shop info</button>
+    <button data-tab="reviews">⭐ Reviews</button>
+  </div>
+
+  <!-- DEALS -->
+  <section id="tab-deals" class="tab">
+    <h2>Deals</h2>
+    <div id="deal-list"></div>
+    <div class="card">
+      <h3 id="deal-form-title">Add a deal</h3>
+      <input id="d-title" placeholder="Title — e.g. Weekend Vape Deal" maxlength="80">
+      <textarea id="d-desc" placeholder="Description" maxlength="300" rows="3"></textarea>
+      <input id="d-price" placeholder="Price badge — e.g. $39.99 or BOGO" maxlength="30">
+      <label class="file">📷 <span id="d-photo-label">Choose photo</span><input id="d-photo" type="file" accept="image/*"></label>
+      <img id="d-preview" class="preview hidden">
+      <div class="row">
+        <button id="d-save" class="btn">Save deal</button>
+        <button id="d-cancel" class="btn dim hidden">Cancel</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="tab-gallery" class="tab hidden">
+    <h2>Gallery photos</h2>
+    <label class="file big">📷 Add photos<input id="g-add" type="file" accept="image/*" multiple></label>
+    <p class="muted">Tap a photo to edit its caption. ✕ removes it.</p>
+    <div id="gal-grid" class="grid"></div>
+  </section>
+
+  <!-- HOURS -->
+  <section id="tab-hours" class="tab hidden">
+    <h2>Opening hours</h2>
+    <p class="muted">Set open & close time for each day.</p>
+    <div id="hours-form"></div>
+    <button id="h-save" class="btn">Save hours</button>
+  </section>
+
+  <!-- SHOP -->
+  <section id="tab-shop" class="tab hidden">
+    <h2>Shop info</h2>
+    <div class="card form">
+      <label>Shop name<input id="s-name" maxlength="60"></label>
+      <label>Tagline<input id="s-tagline" maxlength="80"></label>
+      <label>Phone display<input id="s-phone" maxlength="30"></label>
+      <label>Phone for links (digits with +1)<input id="s-phoneHref" maxlength="20"></label>
+      <label>Address<input id="s-address" maxlength="120"></label>
+      <label>Google Maps link<input id="s-mapsUrl" maxlength="300"></label>
+      <label>Google reviews link<input id="s-reviewsUrl" maxlength="300"></label>
+      <label>Instagram link<input id="s-instagramUrl" maxlength="300"></label>
+      <label>Rating (e.g. 5.0)<input id="s-rating" maxlength="10"></label>
+      <label>Review count<input id="s-reviewCount" type="number" min="0"></label>
+      <label>Hours badge (hero)<input id="s-closingBadge" maxlength="40"></label>
+      <label>Announcement bar (empty = hidden)<input id="s-announcement" maxlength="200"></label>
+      <button id="s-save" class="btn">Save shop info</button>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="tab-reviews" class="tab hidden">
+    <h2>Review highlights</h2>
+    <div id="rev-list"></div>
+    <div class="card">
+      <h3>Add review</h3>
+      <textarea id="r-text" placeholder="Review text" maxlength="400" rows="3"></textarea>
+      <input id="r-name" placeholder="Name — e.g. Google review" maxlength="60">
+      <button id="r-add" class="btn">Add</button>
+    </div>
+  </section>
+
+  <p id="status" class="status"></p>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

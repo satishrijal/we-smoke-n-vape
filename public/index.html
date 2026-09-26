@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>We Smoke N Vape — Dallas, TX | Open Til 1 AM</title>
+<meta name="description" content="We Smoke N Vape — Dallas' 5-star smoke shop. Vapes, glass, hookah, CBD & more. 2950 Walnut Hill Ln, open til 1 AM daily.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- AGE GATE -->
+<div id="age-gate">
+  <div class="age-card">
+    <div class="age-logo">💨</div>
+    <h1>WE SMOKE<br>N VAPE</h1>
+    <p>You must be 21 or older to enter.</p>
+    <div class="age-btns">
+      <button id="age-yes" class="btn-neon">I'M 21+</button>
+      <button id="age-no" class="btn-dim">Under 21</button>
+    </div>
+    <p id="age-msg" class="age-msg hidden">Come back and see us when you're 21. 🤝</p>
+  </div>
+</div>
+
+<!-- ANNOUNCEMENT -->
+<div id="announce" class="hidden"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#top" class="nav-logo">💨 <span>WE SMOKE N VAPE</span></a>
+  <div class="nav-links">
+    <a href="#vape">Vape</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#deals">Deals</a>
+    <a href="#visit">Visit</a>
+  </div>
+  <a id="nav-call" class="btn-neon small" href="tel:+12142380365">📞 Call</a>
+</nav>
+
+<!-- HERO -->
+<header id="top" class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">⭐ <span id="hero-rating">5.0</span> · <span id="hero-reviews">95</span> Google reviews</div>
+    <h1 class="hero-title">WE SMOKE<br><span class="neon-text">N VAPE</span></h1>
+    <p id="hero-tagline" class="hero-sub">Dallas' 5-star smoke shop</p>
+    <div class="hero-hours">🕐 <span id="hero-hours">Open til 1 AM</span> · every day</div>
+    <div class="hero-ctas">
+      <a href="#vape" class="btn-neon">Shop the menu</a>
+      <a id="hero-dir" class="btn-ghost" href="#" target="_blank" rel="noopener">📍 Directions</a>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee"><div class="marquee-track" id="marquee-track"></div></div>
+
+<!-- VAPE -->
+<section id="vape" class="section">
+  <h2 class="sec-title">💨 THE <span class="neon-text">VAPE</span> WALL</h2>
+  <p class="sec-sub">Disposables · E-liquids · Devices — always stocked, always fresh.</p>
+  <div class="cards" id="vape-cards"></div>
+</section>
+
+<!-- MORE -->
+<section id="more" class="section alt">
+  <h2 class="sec-title">🔥 <span class="neon-text">MORE</span> IN STORE</h2>
+  <p class="sec-sub">Glass · Hookah · CBD · Accessories — the wall goes deep.</p>
+  <div class="cards" id="more-cards"></div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="section">
+  <h2 class="sec-title">📸 <span class="neon-text">GALLERY</span></h2>
+  <p class="sec-sub">A look inside the shop.</p>
+  <div class="slideshow">
+    <div class="slides" id="slides"></div>
+    <button class="slide-btn prev" id="slide-prev">‹</button>
+    <button class="slide-btn next" id="slide-next">›</button>
+    <div class="dots" id="dots"></div>
+  </div>
+  <div class="grid" id="gallery-grid"></div>
+</section>
+<div id="lightbox" class="hidden"><img id="lightbox-img" alt=""><button id="lightbox-x">✕</button></div>
+
+<!-- DEALS -->
+<section id="deals" class="section alt">
+  <h2 class="sec-title">🏷️ <span class="neon-text">DEALS</span></h2>
+  <p class="sec-sub">Fresh deals, updated all the time.</p>
+  <div class="cards" id="deal-cards"></div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="section">
+  <h2 class="sec-title">⭐ <span class="neon-text">REVIEWS</span></h2>
+  <div class="rating-big"><span id="rating-num">5.0</span><div class="stars">★★★★★</div><p><span id="rating-count">95</span> Google reviews</p></div>
+  <div class="cards" id="review-cards"></div>
+  <div class="center"><a id="reviews-link" class="btn-ghost" href="#" target="_blank" rel="noopener">Read all reviews on Google →</a></div>
+</section>
+
+<!-- LOYALTY -->
+<section class="loyalty">
+  <h2>📱 GET THE <span class="neon-text">DEALS FIRST</span></h2>
+  <p>Text <b>JOIN</b> to <b id="loyalty-phone">(214) 238-0365</b> and get 10% off your first pickup order.</p>
+  <a id="loyalty-btn" class="btn-neon" href="#">Text JOIN 📲</a>
+</section>
+
+<!-- VISIT -->
+<section id="visit" class="section alt">
+  <h2 class="sec-title">📍 <span class="neon-text">VISIT US</span></h2>
+  <div class="visit-grid">
+    <div>
+      <h3>Hours</h3>
+      <div id="hours-table"></div>
+      <h3>Find us</h3>
+      <p id="visit-address" class="addr"></p>
+      <div class="visit-btns">
+        <a id="visit-call" class="btn-neon" href="#">📞 Call now</a>
+        <a id="visit-dir" class="btn-ghost" href="#" target="_blank" rel="noopener">🧭 Directions</a>
+      </div>
+    </div>
+    <iframe id="map" title="map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+
+<footer>
+  <p>© <span id="year"></span> <span id="foot-name">We Smoke N Vape</span> · Must be 21+ to purchase tobacco & vape products.</p>
+  <p class="warn">⚠️ WARNING: This product contains nicotine. Nicotine is an addictive chemical.</p>
+</footer>
+
+<!-- sticky mobile bar -->
+<div id="sticky-bar">
+  <a id="bar-call" href="#">📞 Call</a>
+  <a id="bar-dir" href="#" target="_blank" rel="noopener">🧭 Directions</a>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
