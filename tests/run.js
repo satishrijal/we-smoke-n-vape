@@ -87,6 +87,13 @@ function req(method, path, body, token) {
   console.log('static files');
   res = await req('GET', '/');
   ok(res.status === 200 && res.raw.includes('WE SMOKE'), 'homepage serves');
+  ok(!res.raw.includes('user-scalable=no'), 'pinch-to-zoom allowed on phones');
+  ok(res.raw.includes('Explore products'), '"Explore products" CTA (not "Shop the menu")');
+  ok(!res.raw.includes('Shop the menu'), 'old "Shop the menu" wording gone');
+  ok(res.raw.includes('id="menu-btn"'), 'mobile menu button present');
+  ok(res.raw.includes('id="today-status"'), 'live open/closed status pill present');
+  ok(res.raw.includes('id="see-more"'), '"see more photos" expander present');
+  ok(!res.raw.includes('<title>We Smoke N Vape — Dallas, TX | Open Til 1 AM</title>'), 'title makes no fixed closing-time claim');
   res = await req('GET', '/admin');
   ok(res.status === 301, '/admin redirects to /admin/ (keeps styles working)');
   res = await req('GET', '/admin/');

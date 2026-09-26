@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>We Smoke N Vape — Dallas, TX | Open Til 1 AM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We Smoke N Vape — Dallas, TX | Vape, Glass & Hookah</title>
 <meta name="description" content="We Smoke N Vape — Dallas' 5-star smoke shop. Vapes, glass, hookah, CBD & more. 2950 Walnut Hill Ln, open til 1 AM daily.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -38,7 +38,16 @@
     <a href="#visit">Visit</a>
   </div>
   <a id="nav-call" class="btn-neon small" href="tel:+12142380365">📞 Call</a>
+  <button id="menu-btn" aria-label="Open menu">☰</button>
 </nav>
+<div id="mobile-menu" class="hidden">
+  <a href="#vape">💨 Vape</a>
+  <a href="#more">🔥 More in store</a>
+  <a href="#gallery">📸 Gallery</a>
+  <a href="#deals">🏷️ Deals</a>
+  <a href="#reviews">⭐ Reviews</a>
+  <a href="#visit">📍 Visit us</a>
+</div>
 
 <!-- HERO -->
 <header id="top" class="hero">
@@ -47,9 +56,9 @@
     <div class="hero-badge">⭐ <span id="hero-rating">5.0</span> · <span id="hero-reviews">95</span> Google reviews</div>
     <h1 class="hero-title">WE SMOKE<br><span class="neon-text">N VAPE</span></h1>
     <p id="hero-tagline" class="hero-sub">Dallas' 5-star smoke shop</p>
-    <div class="hero-hours">🕐 <span id="hero-hours">Open til 1 AM</span> · every day</div>
+    <div class="hero-hours" id="today-status"><span class="dot"></span><span id="today-status-text">Checking hours…</span></div>
     <div class="hero-ctas">
-      <a href="#vape" class="btn-neon">Shop the menu</a>
+      <a href="#vape" class="btn-neon">Explore products</a>
       <a id="hero-dir" class="btn-ghost" href="#" target="_blank" rel="noopener">📍 Directions</a>
     </div>
   </div>
@@ -83,6 +92,7 @@
     <div class="dots" id="dots"></div>
   </div>
   <div class="grid" id="gallery-grid"></div>
+  <div class="center"><button id="see-more" class="btn-ghost hidden"></button></div>
 </section>
 <div id="lightbox" class="hidden"><img id="lightbox-img" alt=""><button id="lightbox-x">✕</button></div>
 
@@ -104,7 +114,8 @@
 <!-- LOYALTY -->
 <section class="loyalty">
   <h2>📱 GET THE <span class="neon-text">DEALS FIRST</span></h2>
-  <p>Text <b>JOIN</b> to <b id="loyalty-phone">(214) 238-0365</b> and get 10% off your first pickup order.</p>
+  <p>Text <b>JOIN</b> to <b id="loyalty-phone">(214) 238-0365</b> and get 10% off your first visit.</p>
+  <p class="fine">One offer per visit — can't be combined with other deals. Ask in store for details.</p>
   <a id="loyalty-btn" class="btn-neon" href="#">Text JOIN 📲</a>
 </section>
 

@@ -36,9 +36,9 @@ function productCard(c) {
 }
 
 /* ---------- gallery slideshow ---------- */
-let slideIdx = 0, slideTimer = null;
+let slideIdx = 0, slideTimer = null, SLIDES = [];
 function showSlide(i) {
-  const n = CONTENT.gallery.length;
+  const n = SLIDES.length;
   if (!n) return;
   slideIdx = (i + n) % n;
   $('#slides').style.transform = `translateX(-${slideIdx * 100}%)`;
@@ -49,18 +49,38 @@ function startAuto() {
   slideTimer = setInterval(() => showSlide(slideIdx + 1), 5000);
 }
 
+/* ---------- today's open / closed status ---------- */
+function parseTime(t) {
+  const m = String(t || '').match(/(\d+):(\d+)\s*(AM|PM)/i);
+  if (!m) return null;
+  let h = +m[1] % 12; if (/pm/i.test(m[3])) h += 12;
+  return h * 60 + (+m[2]);
+}
+function todayStatus(hours) {
+  const keys = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  const now = new Date();
+  const h = (hours || {})[keys[now.getDay()]];
+  if (!h || h.closed) return { open: false, text: 'Closed today' };
+  const o = parseTime(h.open), c = parseTime(h.close);
+  if (o == null || c == null) return { open: false, text: 'See hours below' };
+  const mins = now.getHours() * 60 + now.getMinutes();
+  const isOpen = c <= o ? (mins >= o || mins < c) : (mins >= o && mins < c);
+  if (isOpen) return { open: true, text: 'Open now · Closes ' + h.close };
+  if (c <= o || mins < o) return { open: false, text: 'Closed · Opens today at ' + h.open };
+  return { open: false, text: 'Closed · Opens tomorrow at ' + h.open };
+}
+
 /* ---------- render ---------- */
 function render() {
   const c = CONTENT, s = c.shop;
 
-  document.title = `${s.name} — Dallas, TX | Open Til 1 AM`;
+  document.title = `${s.name} — Dallas, TX`;
   $('#nav-call').href = 'tel:' + s.phoneHref;
   $('#bar-call').href = 'tel:' + s.phoneHref;
   $('#visit-call').href = 'tel:' + s.phoneHref;
   $('#hero-dir').href = s.mapsUrl; $('#visit-dir').href = s.mapsUrl; $('#bar-dir').href = s.mapsUrl;
   $('#hero-rating').textContent = s.rating; $('#hero-reviews').textContent = s.reviewCount;
   $('#hero-tagline').textContent = s.tagline;
-  $('#hero-hours').textContent = s.closingBadge;
   $('#rating-num').textContent = s.rating; $('#rating-count').textContent = s.reviewCount;
   $('#reviews-link').href = s.reviewsUrl;
   $('#visit-address').textContent = s.address;
@@ -71,6 +91,13 @@ function render() {
   $('#year').textContent = new Date().getFullYear();
 
   if (s.announcement) { $('#announce').textContent = '📢 ' + s.announcement; $('#announce').classList.remove('hidden'); }
+
+  // live open / closed status in hero (always agrees with the hours below)
+  const st = todayStatus(c.hours);
+  const pill = $('#today-status');
+  pill.classList.toggle('open', st.open);
+  pill.classList.toggle('closed', !st.open);
+  $('#today-status-text').textContent = st.text;
 
   // marquee
   const items = [s.closingBadge.toUpperCase(), `${s.rating} ★ RATED`, 'VAPES · GLASS · HOOKAH · CBD', 'IN-STORE PICKUP', s.address.toUpperCase()];
@@ -101,20 +128,48 @@ function render() {
     return `<div class="hour-row${i === today ? ' today' : ''}"><span>${label}</span><span>${txt}</span></div>`;
   }).join('');
 
-  // gallery
+  // gallery — slideshow + grid lead with the first 8 photos, rest behind "see more"
   const g = c.gallery;
-  $('#slides').innerHTML = g.map(p => `<img src="${esc(p.img)}" alt="${esc(p.caption || 'shop photo')}" loading="lazy">`).join('');
-  $('#dots').innerHTML = g.map((_, i) => `<span data-i="${i}"></span>`).join('');
-  $('#gallery-grid').innerHTML = g.map((p, i) => `<img src="${esc(p.img)}" alt="${esc(p.caption || '')}" loading="lazy" data-i="${i}">`).join('');
+  const FEAT = 8;
+  SLIDES = g.slice(0, FEAT);
+  $('#slides').innerHTML = SLIDES.map(p => `<img src="${esc(p.img)}" alt="${esc(p.caption || 'shop photo')}" loading="lazy">`).join('');
+  $('#dots').innerHTML = SLIDES.map((_, i) => `<span data-i="${i}"></span>`).join('');
+  let expanded = false;
+  const openLB = src => { $('#lightbox-img').src = src; $('#lightbox').classList.remove('hidden'); };
+  const bindImgs = root => root.querySelectorAll('img').forEach(im => im.onclick = () => openLB(im.src));
+  const drawGrid = () => {
+    const list = expanded ? g : g.slice(0, FEAT);
+    const grid = $('#gallery-grid');
+    grid.innerHTML = list.map(p => `<img src="${esc(p.img)}" alt="${esc(p.caption || '')}" loading="lazy">`).join('');
+    bindImgs(grid);
+    const more = $('#see-more');
+    if (!expanded && g.length > FEAT) {
+      more.textContent = `See all ${g.length} photos`;
+      more.classList.remove('hidden');
+    } else more.classList.add('hidden');
+  };
+  $('#see-more').onclick = () => { expanded = true; drawGrid(); };
+  drawGrid();
+  bindImgs($('#slides'));
   document.querySelectorAll('#dots span').forEach(d => d.onclick = e => { e.stopPropagation(); showSlide(+d.dataset.i); startAuto(); });
   $('#slide-prev').onclick = e => { e.stopPropagation(); showSlide(slideIdx - 1); startAuto(); };
   $('#slide-next').onclick = e => { e.stopPropagation(); showSlide(slideIdx + 1); startAuto(); };
-  const openLB = src => { $('#lightbox-img').src = src; $('#lightbox').classList.remove('hidden'); };
-  document.querySelectorAll('#slides img, #gallery-grid img').forEach(im => im.onclick = () => openLB(im.src));
   $('#lightbox-x').onclick = () => $('#lightbox').classList.add('hidden');
   $('#lightbox').onclick = e => { if (e.target.id === 'lightbox') $('#lightbox').classList.add('hidden'); };
   showSlide(0); startAuto();
 }
+
+/* ---------- mobile menu (bound once) ---------- */
+document.getElementById('menu-btn').onclick = e => {
+  e.stopPropagation();
+  document.getElementById('mobile-menu').classList.toggle('hidden');
+};
+document.querySelectorAll('#mobile-menu a').forEach(a =>
+  a.onclick = () => document.getElementById('mobile-menu').classList.add('hidden'));
+document.addEventListener('click', e => {
+  const mm = document.getElementById('mobile-menu');
+  if (!mm.classList.contains('hidden') && !mm.contains(e.target)) mm.classList.add('hidden');
+});
 
 fetch('/api/content').then(r => r.json()).then(d => { CONTENT = d.content; render(); })
   .catch(() => { document.querySelector('.hero-sub') && ($('#hero-tagline').textContent = "Dallas' 5-star smoke shop"); });
