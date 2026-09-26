@@ -71,12 +71,8 @@ function readBody(req, maxBytes) {
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.webp': 'image/webp' };
 function serveStatic(req, res) {
   let rel = decodeURIComponent(new URL(req.url, 'http://x').pathname);
-  if (rel === '/admin') { // keep the trailing slash so relative files resolve
-    res.writeHead(301, { 'Location': '/admin/' });
-    return res.end();
-  }
   if (rel === '/') rel = '/index.html';
-  if (rel === '/admin/') rel = '/admin/index.html';
+  if (rel === '/admin' || rel === '/admin/') rel = '/admin/index.html';
   const file = path.normalize(path.join(PUBLIC_DIR, rel));
   if (!file.startsWith(PUBLIC_DIR)) { res.writeHead(403); return res.end(); }
   fs.readFile(file, (err, data) => {
